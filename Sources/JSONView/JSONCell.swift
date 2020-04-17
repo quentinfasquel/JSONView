@@ -24,11 +24,11 @@ public struct JSONCell: View {
     }
 
     private func specificView() -> some View {
-        switch rawValue {
-        case let array as [AnyHashable]:
-            return AnyView(keyValueView(treeView: arrayView(array)))
+        switch rawValue {    
+        case let array as [JSON]:
+            return AnyView(keyValueView(treeView: JSONTreeView(array, prefix: key)))
         case let dictionary as JSON:
-            return AnyView(keyValueView(treeView: treeView(dictionary)))
+            return AnyView(keyValueView(treeView: JSONTreeView(dictionary, prefix: key)))
         case let number as NSNumber:
             return AnyView(leafView(number.stringValue))
         case let string as String:
@@ -56,12 +56,6 @@ public struct JSONCell: View {
             }
         }
     }
-    
-    private func arrayView(_ arrayValue: [AnyHashable]) -> JSONTreeView {
-        JSONTreeView(arrayValue.enumerated().map {
-            (key: "\(key)[\($0.offset)]", value: $0.element)
-        })
-    }
 
     private func leafView(_ stringValue: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -76,10 +70,6 @@ public struct JSONCell: View {
         }
             .padding(.vertical, 5)
             .padding(.trailing, 10)
-    }
-    
-    private func treeView(_ dictionaryValue: JSON) -> JSONTreeView {
-        JSONTreeView(dictionaryValue)
     }
 
     private func toggle() {

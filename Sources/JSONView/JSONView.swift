@@ -9,27 +9,38 @@ import SwiftUI
 
 public typealias JSON = [String: AnyHashable]
 
-public struct JSONView: View {
-    private let json: JSON
+// MARK: -
 
-    public init(_ json: JSON) {
-        self.json = json
+public struct JSONView: View {
+    private let rootArray: [JSON]?
+    private let rootDictionary: JSON
+
+    public init(_ array: [JSON]) {
+        self.rootArray = array
+        self.rootDictionary = JSON()
+    }
+
+    public init(_ dictionary: JSON) {
+        self.rootArray = nil
+        self.rootDictionary = dictionary
     }
 
     public init(url: URL) {
         do {
             let data = try Data(contentsOf: url)
             let jsonData = try JSONSerialization.jsonObject(with: data, options: [])
-            self.json = (jsonData as? JSON) ?? JSON()
+            self.rootArray = jsonData as? [JSON]
+            self.rootDictionary = jsonData as? JSON ?? JSON()
         } catch {
-            self.json = JSON()
+            self.rootArray = nil
+            self.rootDictionary = JSON()
             print("JSONView error: \(error.localizedDescription)")
         }
     }
 
     public var body: some View {
         ScrollView(.vertical, showsIndicators: true) {
-            JSONTreeView(json)
+            JSONTreeView(rootArray ?? rootDictionary)
                 .padding([.top, .bottom], 10)
                 .padding(.trailing, 10)
         }

@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 spec.name         = "JSONView"
-spec.version      = "0.0.1"
+spec.version      = "0.0.2"
 spec.summary      = "A light-weight SwiftUI visualizer of JSON content"
 spec.homepage     = "https://github.com/quentinfasquel/JSONView"
 spec.license      = { :type => "MIT", :file => "LICENSE" }
