@@ -9,6 +9,9 @@ import SwiftUI
 
 public struct JSONCell: View {
     private let key: String
+
+    /// * note: According to [JSONSerialization](https://developer.apple.com/documentation/foundation/jsonserialization),
+    /// acceptable values may be NSArray, NSDictionary, NSNumber, NSString or NSNull...
     private let rawValue: AnyHashable
 
     @State private var isOpen: Bool = false
@@ -25,14 +28,16 @@ public struct JSONCell: View {
 
     private func specificView() -> some View {
         switch rawValue {    
-        case let array as [JSON]:
+        case let array as [JSON]: // NSArray
             return AnyView(keyValueView(treeView: JSONTreeView(array, prefix: key)))
-        case let dictionary as JSON:
+        case let dictionary as JSON: // NSDictionary
             return AnyView(keyValueView(treeView: JSONTreeView(dictionary, prefix: key)))
-        case let number as NSNumber:
+        case let number as NSNumber: // NSNumber
             return AnyView(leafView(number.stringValue))
-        case let string as String:
+        case let string as String: // NSString
             return AnyView(leafView(string))
+        case is NSNull: // NSNull
+            return AnyView(leafView("null"))
         default:
             fatalError()
         }
@@ -40,12 +45,16 @@ public struct JSONCell: View {
     
     public func copyValue() {
         switch rawValue {
+        case let array as [JSON]:
+            UIPasteboard.general.string = (array as JSONRepresentable).stringValue
+        case let dictionary as JSON:
+            UIPasteboard.general.string = (dictionary as JSONRepresentable).stringValue
         case let number as NSNumber:
             UIPasteboard.general.string = number.stringValue
         case let string as String:
             UIPasteboard.general.string = string
         default:
-            break
+            UIPasteboard.general.string = nil
         }
     }
     

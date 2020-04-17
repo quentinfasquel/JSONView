@@ -40,12 +40,24 @@ public struct JSONTreeView: View {
 // MARK: -
 
 internal protocol JSONRepresentable {
+    var stringValue: String? { get }
 }
 
-extension JSON: JSONRepresentable {
+extension JSONRepresentable {
+    var stringValue: String? {
+        do {
+            let data = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
+            return String(data: data, encoding: .utf8)
+        } catch {
+            return nil
+        }
+    }
 }
 
 extension Array: JSONRepresentable where Element: JSONRepresentable {
+}
+
+extension JSON: JSONRepresentable {
 }
 
 extension JSONTreeView {
@@ -56,7 +68,7 @@ extension JSONTreeView {
         case let dictionary as JSON:
             self.init(dictionary)
         default:
-            fatalError()
+            self.init(JSON())
         }
     }
 }
