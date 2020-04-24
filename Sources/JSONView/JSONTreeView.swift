@@ -5,8 +5,11 @@
 //  Created by Quentin Fasquel on 16/04/2020.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
+@available(iOS 13, *)
 public struct JSONTreeView: View {
     private let keyValues: [(key: String, value: AnyHashable)]
 
@@ -60,6 +63,7 @@ extension Array: JSONRepresentable where Element: JSONRepresentable {
 extension JSON: JSONRepresentable {
 }
 
+@available(iOS 13, *)
 extension JSONTreeView {
     internal init(_ json: JSONRepresentable, prefix key: String = "") {
         switch json {

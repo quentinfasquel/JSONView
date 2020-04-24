@@ -5,12 +5,15 @@
 //  Created by Quentin Fasquel on 16/04/2020.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
 public typealias JSON = [String: AnyHashable]
 
 // MARK: -
 
+@available(iOS 13, *)
 public struct JSONView: View {
     private let rootArray: [JSON]?
     private let rootDictionary: JSON

@@ -5,8 +5,11 @@
 //  Created by Quentin Fasquel on 16/04/2020.
 //
 
+#if canImport(SwiftUI)
 import SwiftUI
+#endif
 
+@available(iOS 13, *)
 public struct JSONCell: View {
     private let key: String
 
