@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "JSONView",
     platforms: [
-        .iOS(.v13),
+        .iOS(.v11),
     ],
     products: [
         .library(name: "JSONView", targets: ["JSONView"]),

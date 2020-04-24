@@ -6,7 +6,7 @@ spec.homepage     = "https://github.com/quentinfasquel/JSONView"
 spec.license      = { :type => "MIT", :file => "LICENSE" }
 spec.author             = { "author" => "quentin.fasquel@gmail.com" }
 spec.documentation_url = "https://github.com/quentinfasquel/JSONView"
-spec.platforms = { :ios => "13.0" }
+spec.platforms = { :ios => "11.0" }
 spec.swift_version = "5.2"
 spec.source       = { :git => "https://github.com/quentinfasquel/JSONView.git", :tag => "#{spec.version}" }
 spec.source_files  = "Sources/JSONView/**/*.swift"
