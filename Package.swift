@@ -9,7 +9,7 @@ let package = Package(
         .iOS(.v11),
     ],
     products: [
-        .library(name: "JSONView", targets: ["JSONView"]),
+        .library(name: "JSONView", type: .dynamic, targets: ["JSONView"]),
     ],
     targets: [
         .target(name: "JSONView", dependencies: []),
